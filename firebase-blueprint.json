@@ -1,0 +1,107 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and metadata",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "bio": { "type": "string" },
+        "followersCount": { "type": "number" },
+        "followingCount": { "type": "number" },
+        "likedSongs": { "type": "array", "items": { "type": "string" } },
+        "savedAlbums": { "type": "array", "items": { "type": "string" } },
+        "followedArtists": { "type": "array", "items": { "type": "string" } },
+        "isPublic": { "type": "boolean" },
+        "isAdmin": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "username", "email"]
+    },
+    "Song": {
+      "title": "Song",
+      "description": "Metadata for a music track",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "artistId": { "type": "string" },
+        "artistName": { "type": "string" },
+        "albumId": { "type": "string" },
+        "albumName": { "type": "string" },
+        "duration": { "type": "number" },
+        "audioUrl": { "type": "string" },
+        "coverUrl": { "type": "string" },
+        "genre": { "type": "string" },
+        "plays": { "type": "number" },
+        "releaseDate": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Album": {
+      "title": "Album",
+      "description": "Music album metadata",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "artistId": { "type": "string" },
+        "artistName": { "type": "string" },
+        "coverUrl": { "type": "string" },
+        "releaseDate": { "type": "string", "format": "date-time" },
+        "genres": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "Artist": {
+      "title": "Artist",
+      "description": "Music artist metadata",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "bio": { "type": "string" },
+        "avatarUrl": { "type": "string" },
+        "genres": { "type": "array", "items": { "type": "string" } },
+        "monthlyListeners": { "type": "number" }
+      }
+    },
+    "Playlist": {
+      "title": "Playlist",
+      "description": "User created playlists",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "ownerName": { "type": "string" },
+        "coverUrl": { "type": "string" },
+        "songIds": { "type": "array", "items": { "type": "string" } },
+        "isPublic": { "type": "boolean" },
+        "collaboratorIds": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Interaction": {
+      "title": "Interaction",
+      "description": "Social interactions like follows, blocks, reports",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "enum": ["follow", "block", "report"] },
+        "fromUserId": { "type": "string" },
+        "toUserId": { "type": "string" },
+        "targetId": { "type": "string" },
+        "targetType": { "type": "string", "enum": ["user", "artist", "song", "playlist"] },
+        "reason": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/songs/{songId}": { "schema": "Song", "description": "Music tracks" },
+    "/albums/{albumId}": { "schema": "Album", "description": "Music albums" },
+    "/artists/{artistId}": { "schema": "Artist", "description": "Music artists" },
+    "/playlists/{playlistId}": { "schema": "Playlist", "description": "User playlists" },
+    "/interactions/{interactionId}": { "schema": "Interaction", "description": "Social interactions" },
+    "/history/{historyId}": { "schema": "object", "description": "Listening history" }
+  }
+}
